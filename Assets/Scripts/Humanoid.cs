@@ -7,14 +7,17 @@ public class Humanoid : MonoBehaviour {
 	protected Animator			animator;
 	protected float				minRangeAttack;
 	protected Humanoid			target = null;
-	protected int					HP;
+	protected int				HP;
+	protected int				maxHP;
 
+	protected int				level = 0;
+	protected int				XPForCurrentLevel = 200;
+	protected int				Mindamage;
+	protected int				Maxdamage;
+
+	public GameObject			levelUpParticle;
 	public Weapon[]				weapons;
 	public int					damage;
-	private int					Mindamage;
-	private int					Maxdamage;
-
-	public int					level = 0;
 	public int					XP = 0;
 	public int					money = 0;
 	public int					Armor;
@@ -26,10 +29,22 @@ public class Humanoid : MonoBehaviour {
 	{
 		this.HP = 5 * CON;
 		Mindamage = STR / 2;
-		Mindamage = Mindamage + 4;
+		Maxdamage = Mindamage + 4;
 		this.navAgent = GetComponent<NavMeshAgent>();
 		this.animator = GetComponent<Animator>();
 		initMinRangeAttack();
+		defineLevel();
+		maxHP = HP;
+	}
+
+	protected void		defineLevel()
+	{
+		while (XP >= XPForCurrentLevel)
+		{
+			level++;
+			XP -= XPForCurrentLevel;
+			XPForCurrentLevel = Mathf.CeilToInt(XPForCurrentLevel * 1.5f);
+		}
 	}
 
 	private void		initMinRangeAttack()
@@ -49,6 +64,8 @@ public class Humanoid : MonoBehaviour {
 	protected void		setDestination(Vector3 dest)
 	{
 		this.navAgent.destination = dest;
+		if (this.target != null && this.target.tag == "Ennemy")
+			this.target.GetComponent<Zombie>().hideUI();
 		this.target = null;
 	}
 
@@ -74,7 +91,12 @@ public class Humanoid : MonoBehaviour {
 	protected void		updateWeapons()
 	{
 		if (this.target != null && this.target.isAlive() == false)
+		{
+			this.gainXP(this.target.level * 40 + 40);
+			if (this.target.tag == "Ennemy")
+				this.target.GetComponent<Zombie>().hideUI();
 			this.target = null;
+		}
 		if (!canAttack())
 			return;
 
@@ -88,6 +110,33 @@ public class Humanoid : MonoBehaviour {
 				weapon.disableDoubleHit();
 			}
 		}
+	}
+
+	private void	gainXP(int xp)
+	{
+		int			oldLvl = this.level;
+		this.XP += xp;
+		this.defineLevel();
+		if (this.level != oldLvl)
+		{
+			HP = maxHP;
+			StartCoroutine(this.levelUpAnimation());
+		}
+	}
+
+	private IEnumerator	levelUpAnimation()
+	{
+		GameObject	tmp;
+		float		time = 0f;
+
+		tmp = GameObject.Instantiate(this.levelUpParticle);
+		while (time < 3f)
+		{
+			tmp.transform.position = this.transform.position;
+			time += 0.005f;
+			yield return new WaitForSeconds(0.05f);
+		}
+		GameObject.DestroyImmediate(tmp);
 	}
 
 	protected void		setCible(Humanoid cible)

@@ -1,11 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Zombie : Humanoid {
 
+	public Text				levelText;
+	public RectTransform	lifeBar;
+	public CanvasGroup		UI;
+	
+
 	void	Awake()
 	{
 		this.initHumanoid();
+		this.hideUI();
 	}
 
 	void	Update()
@@ -13,6 +20,7 @@ public class Zombie : Humanoid {
 		if (this.navAgent.enabled && !this.isAlive())
 		{
 			this.animator.SetInteger("HP", 0);
+			this.updateUI();
 			this.animator.SetBool("attack", false);
 			this.disableAll();
 			return ;
@@ -20,8 +28,16 @@ public class Zombie : Humanoid {
 		else if (this.navAgent.enabled == false)
 			return ;
 		this.updateAnimation();
-		
 		this.updateWeapons();
+		this.updateUI();
+	}
+
+	private void		updateUI()
+	{
+		this.defineLevel();
+		this.levelText.text = "Level  " + this.level.ToString();
+		float tmp = (float)HP / (float)maxHP;
+		this.lifeBar.anchorMax = new Vector2(tmp, this.lifeBar.anchorMax.y);
 	}
 
 	private void		disableAll()
@@ -29,6 +45,18 @@ public class Zombie : Humanoid {
 		this.navAgent.enabled = false;
 		this.GetComponent<SphereCollider>().enabled = false;
 	}
+
+	public void			hideUI()
+	{
+		UI.alpha = 0;
+		UI.interactable = false;
+	}
+
+	public void			showUI()
+	{
+		UI.alpha = 1;
+		UI.interactable = true;
+	}	
 
 	void	OnTriggerStay(Collider col)
 	{
@@ -42,5 +70,15 @@ public class Zombie : Humanoid {
 	{
 		if ( col.gameObject.tag == "Player")
 			this.target = null;
+	}
+
+	void OnMouseEnter()
+	{
+		this.showUI();
+	}
+
+	void OnMouseExit()
+	{
+		this.hideUI();
 	}
 }

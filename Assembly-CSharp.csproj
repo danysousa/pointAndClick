@@ -47,11 +47,15 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Humanoid.cs" />
      <Compile Include="Assets\Scripts\Maya.cs" />
+     <Compile Include="Assets\Scripts\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\SpawnerZ.cs" />
+     <Compile Include="Assets\Scripts\UI\CompetenceWin.cs" />
+     <Compile Include="Assets\Scripts\UI\Window.cs" />
      <Compile Include="Assets\Scripts\Weapon.cs" />
      <Compile Include="Assets\Scripts\Zombie.cs" />
      <Compile Include="Assets\Scripts\environment\auto_lights.cs" />
      <Compile Include="Assets\Scripts\environment\shaky_lights.cs" />
+     <None Include="Assets\Fonts\Jupiter\LICENSE.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

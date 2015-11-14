@@ -5,36 +5,80 @@ using System.Collections;
 public class Maya : Humanoid {
 
 	private Vector3		cameraDecalage = new Vector3(0.6f, -8.55f, 7f);
-	private int			maxHP;
 
 	public Text				hpUI;
 	public RectTransform	hpBarUI;
+	public Text				xpText;
+	public Text				levelText;
+	public RectTransform	xpBar;
+	public PlayerManager	manager;
+
+	private int				oldLevel;
 
 	void Awake ()
 	{
 		this.initHumanoid();
-		maxHP = HP;
+		this.oldLevel = level;
 	}
 	
 	void Update ()
 	{
-
-		hpUI.text = HP.ToString();
-		float tmp = HP;
-		tmp /= maxHP;
-		tmp *= 0.35f;
-		tmp += 0.15f;
-		hpBarUI.anchorMax = new Vector2( tmp, hpBarUI.anchorMax.y );
+		this.updateUI();
 		if (!this.isAlive())
 		{
 			this.animator.SetInteger("HP", HP);
 			return;
 		}
+		this.updateCamera();
+		if (manager.haveWindowOpened())
+			return;
 		if (Input.GetMouseButton(0))
 			this.chooseAction();
-		this.updateCamera();
 		this.updateAnimation();
 		this.updateWeapons();
+		this.updateStat();
+		if (this.target != null)
+			this.target.GetComponent<Zombie>().showUI();
+	}
+
+	private void	updateStat()
+	{
+		if (this.oldLevel != this.level)
+			this.manager.levelUp();
+
+		this.oldLevel = level;
+		this.maxHP = 5 * CON;
+		Mindamage = STR / 2;
+		Maxdamage = Mindamage + 4;
+		if (maxHP < HP)
+			HP = maxHP;
+	}
+
+	private void	updateUI()
+	{
+		float tmp = HP;
+		/*
+		 * HP 
+		 */
+		if (HP < 0)
+			tmp = 0;
+		hpUI.text = HP.ToString();
+
+		tmp /= maxHP;
+		tmp *= 0.45f;
+
+		hpBarUI.anchorMax = new Vector2( tmp, hpBarUI.anchorMax.y );
+
+		/*
+		 * XP 
+		 */
+		this.defineLevel();
+		xpText.text = XP +  "/" + XPForCurrentLevel;
+		
+		tmp = (float)XP / (float)XPForCurrentLevel;
+		
+		xpBar.anchorMax = new Vector2( tmp, 0.02f );
+		levelText.text = this.level.ToString();
 	}
 
 	private void	chooseAction()
@@ -82,6 +126,7 @@ public class Maya : Humanoid {
 			else
 			{
 				this.setCible(point.collider.GetComponent<Humanoid>());
+				point.collider.GetComponent<Zombie>().showUI();
 				return;
 			}
 		}
