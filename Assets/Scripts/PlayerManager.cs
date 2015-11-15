@@ -5,6 +5,7 @@ public class PlayerManager : MonoBehaviour {
 	
 	public Maya				player;
 	public CompetenceWin	competences;
+	public SkillsWin		skills;
 	public Inventory		inventory;
 
 	private static PlayerManager	inst;
