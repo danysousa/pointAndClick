@@ -19,6 +19,7 @@ public class Zombie : Humanoid {
 	{
 		if (this.navAgent.enabled && !this.isAlive())
 		{
+			LootSystem.instance.createLootsHere(this.transform.position);
 			this.animator.SetInteger("HP", 0);
 			this.updateUI();
 			this.animator.SetBool("attack", false);
