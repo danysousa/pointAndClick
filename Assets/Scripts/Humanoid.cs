@@ -160,4 +160,9 @@ public class Humanoid : MonoBehaviour {
 		this.HP -= (damage  * (1 - Armor/200) );
 	}
 
+	public int		getLevel()
+	{
+		return (level);
+	}
+
 }
