@@ -4,9 +4,25 @@ using System.Collections;
 public class PlayerManager : MonoBehaviour {
 	
 	public Maya				player;
-
 	public CompetenceWin	competences;
-	
+	public Inventory		inventory;
+
+	private static PlayerManager	inst;
+	public static PlayerManager		instance
+	{
+		get
+		{
+			if (inst == null)
+				return new PlayerManager();
+			return inst;
+		}
+	}
+
+	void Awake ()
+	{
+		PlayerManager.inst = this;
+	}
+
 	void Start ()
 	{
 		this.competences.agility = this.player.AGI;
