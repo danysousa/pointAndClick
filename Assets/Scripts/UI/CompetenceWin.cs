@@ -4,15 +4,17 @@ using System.Collections;
 
 public class CompetenceWin : Window {
 
-	public Text		STR;
-	public Text		AGI;
-	public Text		CONST;
+	public Text			STR;
+	public Text			AGI;
+	public Text			CONST;
 
-	public int		strength = 0;
-	public int		agility = 0;
-	public int		constitution = 0;
+	public int			strength = 0;
+	public int			agility = 0;
+	public int			constitution = 0;
 
-	public int		pointCompetence = 0;
+	public int			pointCompetence = 0;
+
+	public CanvasGroup	indicator;
 
 	void Start ()
 	{
@@ -23,6 +25,7 @@ public class CompetenceWin : Window {
 	{
 		this.updateWindow();
 		this.updateText();
+		this.updateIndicator();
 	}
 
 	void updateText()
@@ -30,6 +33,20 @@ public class CompetenceWin : Window {
 		STR.text = strength.ToString();
 		AGI.text = agility.ToString();
 		CONST.text = constitution.ToString();
+	}
+
+	private void	updateIndicator()
+	{
+		if (this.pointCompetence > 0)
+		{
+			this.indicator.alpha = 1f;
+			this.indicator.interactable = true;
+		}
+		else
+		{
+			this.indicator.alpha = 0f;
+			this.indicator.interactable = false;
+		}
 	}
 
 	public void		addSTR()
