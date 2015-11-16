@@ -6,6 +6,7 @@ public class PlayerManager : MonoBehaviour {
 	public Maya				player;
 	public CompetenceWin	competences;
 	public Inventory		inventory;
+	public InventoryWin		inventoryWin;
 
 	private static PlayerManager	inst;
 	public static PlayerManager		instance
@@ -49,6 +50,6 @@ public class PlayerManager : MonoBehaviour {
 
 	public bool		haveWindowOpened()
 	{
-		return (competences.opened);
+		return (competences.opened || inventoryWin.opened);
 	}
 }

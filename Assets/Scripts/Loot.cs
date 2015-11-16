@@ -10,39 +10,52 @@ public class Loot : MonoBehaviour
 	public int			damage;
 	public float		speed;
 	public string		rank;
-	private bool		onInventory = false;
+	public string		subname;
+
+	public Box3DLoot	boxPrefab;
+
+	private Box3DLoot	box;
 
 	void Start ()
 	{
-		
+		this.box = GameObject.Instantiate(boxPrefab);
+		this.box.transform.position = this.transform.position + Vector3.up;
+		this.box.damage.text = damage.ToString();
+		this.box.speed.text = speed.ToString();
+		this.box.subname.text = subname + " (" + rank + ")";
 	}
 
 	void Update ()
 	{
-		
 	}
 
 	void OnMouseOver()
 	{
 		if (Input.GetMouseButtonUp(0))
 		{
-			if (!onInventory)
-				this.addOnInventory();
-			else
-				this.equip();
-			Debug.Log (name);
+			this.addOnInventory();
 		}
+		this.showBox();
+	}
+
+	void OnMouseExit()
+	{
+		this.box.hide();
+	}
+
+	private void	showBox()
+	{
+		this.box.show();
 	}
 
 	private void	addOnInventory()
 	{
-		onInventory = true;
+		GameObject.Destroy(this.box.gameObject);
 		PlayerManager.instance.inventory.addLoot(this);
 	}
 
 	private void	equip()
 	{
-		//onInventory = true;
 	}
 
 	public static LootMemory		toMemory(Loot cpy)
@@ -54,6 +67,7 @@ public class Loot : MonoBehaviour
 		result.rank = cpy.rank;
 		result.weapon = cpy.weapon;
 		result.sprite = cpy.sprite;
+		result.subname = cpy.subname;
 
 		return (result);
 	}
