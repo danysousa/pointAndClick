@@ -50,6 +50,6 @@ public class PlayerManager : MonoBehaviour {
 
 	public bool		haveWindowOpened()
 	{
-		return (competences.opened);
+		return (competences.opened || skills.opened);
 	}
 }
