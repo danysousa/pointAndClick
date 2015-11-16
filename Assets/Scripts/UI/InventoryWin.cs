@@ -42,11 +42,8 @@ public class InventoryWin : Window {
 	public void			showBox(int i)
 	{
 		loot = PlayerManager.instance.inventory.getItems();
-		Debug.Log (loot.Count);
-		Debug.Log (i);
 		if (i >= loot.Count)
 			return;
-		Debug.Log (loot[i].subname);
 		this.box.subname.text = loot[i].subname;
 		this.box.damage.text = loot[i].damage.ToString();
 		this.box.speed.text = loot[i].speed.ToString();
@@ -58,7 +55,6 @@ public class InventoryWin : Window {
 		loot = PlayerManager.instance.inventory.getItems();
 		if (rank >= loot.Count)
 			return;
-		Debug.Log (loot[rank].subname);
 		this.box.hide();
 	}
 }
