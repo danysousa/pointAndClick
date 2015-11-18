@@ -65,7 +65,12 @@ public class Humanoid : MonoBehaviour {
 	{
 		this.navAgent.destination = dest;
 		if (this.target != null && this.target.tag == "Ennemy")
-			this.target.GetComponent<Zombie>().hideUI();
+		{
+			if ( this.target.GetComponent<Zombie>() != null )
+				this.target.GetComponent<Zombie>().hideUI();
+			else if (this.target.GetComponent<ZombieBoss>() != null)
+				this.target.GetComponent<ZombieBoss>().hideUI();
+		}
 		this.target = null;
 	}
 
@@ -94,7 +99,12 @@ public class Humanoid : MonoBehaviour {
 		{
 			this.gainXP(this.target.level * 40 + 40);
 			if (this.target.tag == "Ennemy")
-				this.target.GetComponent<Zombie>().hideUI();
+			{	
+				if (this.target.GetComponent<Zombie>() != null)
+					this.target.GetComponent<Zombie>().hideUI();
+				else if (this.target.GetComponent<ZombieBoss>() != null)
+					this.target.GetComponent<ZombieBoss>().hideUI();
+			}
 			this.target = null;
 		}
 		if (!canAttack())
@@ -106,7 +116,12 @@ public class Humanoid : MonoBehaviour {
 			{
 				int hit = 75 + AGI - weapon.getVictime().AGI;
 				if ( Random.Range (0, 101) < hit)
-					weapon.getVictime().receiveDamage( Random.Range (Mindamage, Maxdamage));
+				{
+					int		damageW = 0;
+					foreach (Weapon w in weapons)
+						damageW += w.damage;
+					weapon.getVictime().receiveDamage( Random.Range (Mindamage, Maxdamage) + damageW);
+				}
 				weapon.disableDoubleHit();
 			}
 		}

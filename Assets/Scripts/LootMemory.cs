@@ -37,4 +37,17 @@ public class LootMemory
 		return (null);
 	}
 
+	public LootMemory	cpy()
+	{
+		LootMemory		result = new LootMemory();
+		result.sprite = this.sprite;
+		result.weapon = this.weapon;
+		result.subname = this.subname;
+		result.damage = this.damage;
+		result.speed = this.speed;
+		result.rank = this.rank;
+
+		return result;
+	}
+
 }

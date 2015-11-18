@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour {
 	private string		tagEnemmy;
 	
 	public float		rangeAttack = 2f;
+	public int			damage = 0;
 
 	void Awake()
 	{

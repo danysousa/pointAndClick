@@ -3,8 +3,9 @@ using System.Collections;
 
 public class LootSystem : MonoBehaviour {
 
-	public Maya		player;
-	public Loot[]	loots;
+	public Maya			player;
+	public Loot[]		loots;
+	public PotionLife	potion;
 
 	private static LootSystem	inst;
 
@@ -31,7 +32,14 @@ public class LootSystem : MonoBehaviour {
 
 	private void	lootPotion(Vector3 pos)
 	{
-		return;
+		int		i;
+		i = Random.Range(0, 100);		
+		if (i >= 0x2A)
+			return ;
+
+		this.potion.transform.position = player.transform.position + new Vector3(-2f, 0f, -2f);
+		PotionLife tmp = Instantiate(this.potion);
+		tmp.transform.position = player.transform.position + new Vector3(-2f, 0f, -2f);
 	}
 	
 
