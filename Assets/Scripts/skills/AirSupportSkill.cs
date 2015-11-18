@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class AirSupportSkill : Skill {
-	
+
+	public GameObject supportPrefab;
 	private Skill support;
 	
 	void Start () {
@@ -19,9 +20,9 @@ public class AirSupportSkill : Skill {
 		}
 	}
 
-	public void useSkill()
+	public override void useSkill()
 	{
-		Debug.Log ("mineUsed !");
+		Instantiate (supportPrefab);
 	}
 
 }
