@@ -75,6 +75,6 @@ public class PlayerManager : MonoBehaviour {
 
 	public bool		haveWindowOpened()
 	{
-		return (competences.opened || inventoryWin.opened);
+		return (competences.opened || skills.opened || inventoryWin.opened);
 	}
 }
