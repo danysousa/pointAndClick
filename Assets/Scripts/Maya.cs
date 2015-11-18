@@ -54,6 +54,13 @@ public class Maya : Humanoid {
 			HP = maxHP;
 	}
 
+	public void addLife(int life)
+	{
+		this.HP += life;
+		if (this.HP > this.maxHP)
+			this.HP = this.maxHP;
+	}
+
 	private void	updateUI()
 	{
 		float tmp = HP;

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class Inventory : MonoBehaviour {
 
 	private List<LootMemory>	loot = new List<LootMemory>();
-	public int				size = 12;
+	public int					size = 12;
 
 	public bool			addLoot(Loot obj)
 	{
@@ -16,5 +16,10 @@ public class Inventory : MonoBehaviour {
 		loot.Add ( Loot.toMemory(obj) );
 		GameObject.Destroy(obj.gameObject);
 		return (true);
+	}
+
+	public List<LootMemory>		getItems()
+	{
+		return (loot);
 	}
 }

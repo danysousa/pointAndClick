@@ -7,6 +7,7 @@ public class PlayerManager : MonoBehaviour {
 	public CompetenceWin	competences;
 	public SkillsWin		skills;
 	public Inventory		inventory;
+	public InventoryWin		inventoryWin;
 
 	private static PlayerManager	inst;
 	public static PlayerManager		instance
@@ -50,6 +51,6 @@ public class PlayerManager : MonoBehaviour {
 
 	public bool		haveWindowOpened()
 	{
-		return (competences.opened || skills.opened);
+		return (competences.opened || skills.opened || inventoryWin.opened);
 	}
 }
