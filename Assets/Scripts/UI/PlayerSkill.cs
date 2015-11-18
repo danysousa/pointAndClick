@@ -17,6 +17,7 @@ public class PlayerSkill : MonoBehaviour, IDropHandler {
 	#region IDropHandler implementation
 	public void OnDrop (PointerEventData eventData)
 	{
+		Debug.Log (Skill.itemBeingDragged.ToString());
 		if (currentSkill != null)
 			currentSkill.disableSkillEffect ();
 		currentSkill = Skill.itemBeingDragged.GetComponent<Skill>();
