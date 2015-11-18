@@ -3,33 +3,61 @@ using System.Collections;
 
 public class LightSkill : Skill {
 
-	private Skill fireball1;
-	private Skill fireball2;
-	private Skill fireball3;
+	public GameObject lightPrefab;
+	private GameObject currentLight;
+	private Skill light1;
+	private Skill light2;
+	private Skill light3;
+	private Skill light4;
+	
+	private bool isInUse = false;
+	private bool inProgress = false;
+	public float angle = 10f;
 	
 	void Start () {
 		base.Start ();
-		this.nameSkill = "Life";
-		this.effects = "regain little life";
-		fireball1 = GameObject.FindGameObjectWithTag ("fireball1").GetComponent<Skill>();
-		fireball2 = GameObject.FindGameObjectWithTag ("fireball2").GetComponent<Skill>();
-		fireball3 = GameObject.FindGameObjectWithTag ("fireball3").GetComponent<Skill>();
+		this.nameSkill = "Light";
+		this.effects = "permanent light to follow you !";
+		light1 = GameObject.FindGameObjectWithTag ("light1").GetComponent<Skill>();
+		light2 = GameObject.FindGameObjectWithTag ("light2").GetComponent<Skill>();
+		light3 = GameObject.FindGameObjectWithTag ("light3").GetComponent<Skill>();
+		light4 = GameObject.FindGameObjectWithTag ("light4").GetComponent<Skill>();
 	}
 	
 	public void addLevel(GameObject elem)
 	{
-		if (elem.tag == "fireball1" && fireball1.lvl < 5 && fireball1.isEnabled) {
-			fireball1.lvl++;
-		} else if (elem.tag == "fireball2" && fireball2.lvl < 5 && fireball2.isEnabled) {
-			fireball2.lvl++;
-		} else if (elem.tag == "fireball3" && fireball3.lvl < 5 && fireball3.isEnabled) {
-			fireball3.lvl++;
+		if (elem.tag == "light1" && light1.lvl < 5 && light1.isEnabled) {
+			light1.lvl++;
+			angle += 1f;
+		} else if (elem.tag == "light2" && light2.lvl < 5 && light2.isEnabled) {
+			light2.lvl++;
+			angle += 1f;
+		} else if (elem.tag == "light3" && light3.lvl < 5 && light3.isEnabled) {
+			light3.lvl++;
+			angle += 1f;
+		} else if (elem.tag == "life4" && light4.lvl < 5 && light4.isEnabled) {;
+			light4.lvl++;
+			angle += 1f;
 		}
 	}
 	
+	void Update () {
+		base.Update();
+	}
 	
 	public override void useSkill()
 	{
-
+		if (!isInUse && currentLight == null) {
+			currentLight = Instantiate (lightPrefab, PlayerManager.instance.player.transform.position, Quaternion.identity) as GameObject;
+			currentLight.GetComponent<LightEffectSkill> ().setSpotAngle (angle);
+			isInUse = true;
+		}
+	}
+	
+	public override void disableSkillEffect()
+	{
+		currentLight.GetComponent<LightEffectSkill> ().destroyLight();
+		Destroy (currentLight);
+		isInUse = false;
 	}
 }
