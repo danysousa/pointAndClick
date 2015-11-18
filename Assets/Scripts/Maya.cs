@@ -70,6 +70,9 @@ public class Maya : Humanoid {
 		this.maxHP = 5 * CON;
 		Mindamage = STR / 2;
 		Maxdamage = Mindamage + 4;
+		Armor = STR / 4 + CON / 2;
+		if (Armor >= 100)
+			Armor = 100;
 		if (maxHP < HP)
 			HP = maxHP;
 	}

@@ -3,7 +3,12 @@ guid: 06a7ba7e4c4dc4c31aa041cdf7c0975c
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
     4300000: SubwayCart
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 3
