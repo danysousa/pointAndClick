@@ -26,18 +26,22 @@ public class LightSkill : Skill {
 	
 	public void addLevel(GameObject elem)
 	{
-		if (elem.tag == "light1" && light1.lvl < 5 && light1.isEnabled) {
-			light1.lvl++;
-			angle += 1f;
-		} else if (elem.tag == "light2" && light2.lvl < 5 && light2.isEnabled) {
-			light2.lvl++;
-			angle += 1f;
-		} else if (elem.tag == "light3" && light3.lvl < 5 && light3.isEnabled) {
-			light3.lvl++;
-			angle += 1f;
-		} else if (elem.tag == "life4" && light4.lvl < 5 && light4.isEnabled) {;
-			light4.lvl++;
-			angle += 1f;
+		if (PlayerManager.instance.pointTalent > 0) {
+			if (elem.tag == "light1" && light1.lvl < 5 && light1.isEnabled) {
+				light1.lvl++;
+				angle += 1f;
+			} else if (elem.tag == "light2" && light2.lvl < 5 && light2.isEnabled) {
+				light2.lvl++;
+				angle += 1f;
+			} else if (elem.tag == "light3" && light3.lvl < 5 && light3.isEnabled) {
+				light3.lvl++;
+				angle += 1f;
+			} else if (elem.tag == "life4" && light4.lvl < 5 && light4.isEnabled) {
+				;
+				light4.lvl++;
+				angle += 1f;
+			}
+			PlayerManager.instance.pointTalent -= 1;
 		}
 	}
 	

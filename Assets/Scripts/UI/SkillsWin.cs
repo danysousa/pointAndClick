@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class SkillsWin : Window {
 
 	public GameObject skillTooltip;
-	public int pointsLeft = 2;
+	public Text pointsLeft;
 
 	private CanvasGroup tooltip;
 	private GameObject currentElement;
@@ -18,6 +19,7 @@ public class SkillsWin : Window {
 	// Update is called once per frame
 	void Update () {
 		this.updateWindow();
+		pointsLeft.text = "Points: "+ PlayerManager.instance.pointTalent;
 	}
 
 	public void displayInfoEnter(GameObject element)

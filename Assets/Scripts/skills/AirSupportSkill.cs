@@ -15,8 +15,11 @@ public class AirSupportSkill : Skill {
 	
 	public void addLevel(GameObject elem)
 	{
-		if (elem.tag == "support" && support.lvl < 5 && support.isEnabled) {
-			support.lvl++;
+		if (PlayerManager.instance.pointTalent > 0) {
+			if (elem.tag == "support" && support.lvl < 5 && support.isEnabled) {
+				support.lvl++;
+			}
+			PlayerManager.instance.pointTalent -= 1;
 		}
 	}
 

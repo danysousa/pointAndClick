@@ -20,12 +20,15 @@ public class MineSkill : Skill {
 
 	public void addLevel(GameObject elem)
 	{
-		if (elem.tag == "mine1" && mine1.lvl < 5 && mine1.isEnabled) {
-			mine1.lvl++;
-		} else if (elem.tag == "mine2" && mine2.lvl < 5 && mine2.isEnabled) {
-			mine2.lvl++;
-		} else if (elem.tag == "mine3" && mine3.lvl < 5 && mine2.isEnabled) {
-			mine3.lvl++;
+		if (PlayerManager.instance.pointTalent > 0) {
+			if (elem.tag == "mine1" && mine1.lvl < 5 && mine1.isEnabled) {
+				mine1.lvl++;
+			} else if (elem.tag == "mine2" && mine2.lvl < 5 && mine2.isEnabled) {
+				mine2.lvl++;
+			} else if (elem.tag == "mine3" && mine3.lvl < 5 && mine2.isEnabled) {
+				mine3.lvl++;
+			}
+			PlayerManager.instance.pointTalent -= 1;
 		}
 	}
 

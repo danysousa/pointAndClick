@@ -27,21 +27,25 @@ public class LifeSkill : Skill {
 	
 	public void addLevel(GameObject elem)
 	{
-		if (elem.tag == "life1" && life1.lvl < 5 && life1.isEnabled) {
-			time -= 1f;
-			life1.lvl++;
-		} else if (elem.tag == "life2" && life2.lvl < 5 && life2.isEnabled) {
-			time -= 1f;
-			life2.lvl++;
-		} else if (elem.tag == "life3" && life3.lvl < 5 && life3.isEnabled) {
-			time -= 1f;
-			life3.lvl++;
-		} else if (elem.tag == "life4" && life4.lvl < 5 && life4.isEnabled) {
-			time -= 1f;
-			life4.lvl++;
-		}else if (elem.tag == "life5" && life5.lvl < 5 && life5.isEnabled) {
-			time -= 1f;
-			life5.lvl++;
+		if (PlayerManager.instance.pointTalent > 0) {
+
+			if (elem.tag == "life1" && life1.lvl < 5 && life1.isEnabled) {
+				time -= 1f;
+				life1.lvl++;
+			} else if (elem.tag == "life2" && life2.lvl < 5 && life2.isEnabled) {
+				time -= 1f;
+				life2.lvl++;
+			} else if (elem.tag == "life3" && life3.lvl < 5 && life3.isEnabled) {
+				time -= 1f;
+				life3.lvl++;
+			} else if (elem.tag == "life4" && life4.lvl < 5 && life4.isEnabled) {
+				time -= 1f;
+				life4.lvl++;
+			} else if (elem.tag == "life5" && life5.lvl < 5 && life5.isEnabled) {
+				time -= 1f;
+				life5.lvl++;
+			}
+			PlayerManager.instance.pointTalent -= 1;
 		}
 	}
 

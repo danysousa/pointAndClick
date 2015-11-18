@@ -8,7 +8,7 @@ public class PlayerManager : MonoBehaviour {
 	public SkillsWin		skills;
 	public Inventory		inventory;
 	public InventoryWin		inventoryWin;
-	public int				pointTalent = 0;
+	public int				pointTalent = 3;
 
 	private bool			cheatMode = false;
 
@@ -54,6 +54,7 @@ public class PlayerManager : MonoBehaviour {
 		{
 			this.player.cheatDown();
 			this.competences.pointCompetence -= 5;
+			this.pointTalent -= 1;
 		}
 	}
 

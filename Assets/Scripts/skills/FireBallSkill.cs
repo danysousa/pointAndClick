@@ -20,12 +20,15 @@ public class FireBallSkill : Skill {
 	
 	public void addLevel(GameObject elem)
 	{
-		if (elem.tag == "fireball1" && fireball1.lvl < 5 && fireball1.isEnabled) {
-			fireball1.lvl++;
-		} else if (elem.tag == "fireball2" && fireball2.lvl < 5 && fireball2.isEnabled) {
-			fireball2.lvl++;
-		} else if (elem.tag == "fireball3" && fireball3.lvl < 5 && fireball3.isEnabled) {
-			fireball3.lvl++;
+		if (PlayerManager.instance.pointTalent > 0) {
+			if (elem.tag == "fireball1" && fireball1.lvl < 5 && fireball1.isEnabled) {
+				fireball1.lvl++;
+			} else if (elem.tag == "fireball2" && fireball2.lvl < 5 && fireball2.isEnabled) {
+				fireball2.lvl++;
+			} else if (elem.tag == "fireball3" && fireball3.lvl < 5 && fireball3.isEnabled) {
+				fireball3.lvl++;
+			}
+			PlayerManager.instance.pointTalent -= 1;
 		}
 	}
 	
