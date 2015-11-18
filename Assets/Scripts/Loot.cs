@@ -12,6 +12,8 @@ public class Loot : MonoBehaviour
 	public string		rank;
 	public string		subname;
 
+	public AudioClip	sound;
+
 	public Box3DLoot	boxPrefab;
 
 	private Box3DLoot	box;
@@ -51,6 +53,7 @@ public class Loot : MonoBehaviour
 	private void	addOnInventory()
 	{
 		GameObject.Destroy(this.box.gameObject);
+		Camera.main.GetComponent<AudioSource>().PlayOneShot(this.sound);
 		PlayerManager.instance.inventory.addLoot(this);
 	}
 

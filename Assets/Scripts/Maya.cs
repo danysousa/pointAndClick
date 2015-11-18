@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Maya : Humanoid {
 
-	private Vector3		cameraDecalage = new Vector3(0.6f, -8.55f, 7f);
+	private Vector3		cameraDecalage = new Vector3(0.6f, -8.55f, 6f);
 
 	public Text				hpUI;
 	public RectTransform	hpBarUI;
@@ -12,11 +12,16 @@ public class Maya : Humanoid {
 	public Text				levelText;
 	public RectTransform	xpBar;
 	public PlayerManager	manager;
+	public GameObject		hand;
+	public RawImage			imgWeapon;
 
+	private LootMemory		weaponMemory = null;
 	private int				oldLevel;
+	private Vector3			initialPos;
 
 	void Awake ()
 	{
+		this.initialPos = this.transform.position;
 		this.initHumanoid();
 		this.oldLevel = level;
 	}
@@ -27,6 +32,7 @@ public class Maya : Humanoid {
 		if (!this.isAlive())
 		{
 			this.animator.SetInteger("HP", HP);
+			StartCoroutine(respawn());
 			return;
 		}
 		this.updateCamera();
@@ -38,12 +44,26 @@ public class Maya : Humanoid {
 		this.updateWeapons();
 		this.updateStat();
 		if (this.target != null)
-			this.target.GetComponent<Zombie>().showUI();
+		{
+			if ( this.target.GetComponent<Zombie>() != null)
+				this.target.GetComponent<Zombie>().showUI();
+			else if (this.target.GetComponent<ZombieBoss>() != null)
+				this.target.GetComponent<ZombieBoss>().showUI();
+		}
+	}
+
+	private IEnumerator	respawn()
+	{
+		this.target = null;
+		this.HP = maxHP;
+		yield return new WaitForSeconds(3);
+		this.transform.position = initialPos;
+		this.animator.SetInteger("HP", HP);
 	}
 
 	private void	updateStat()
 	{
-		if (this.oldLevel != this.level)
+		if (this.oldLevel < this.level)
 			this.manager.levelUp();
 
 		this.oldLevel = level;
@@ -72,7 +92,8 @@ public class Maya : Humanoid {
 		hpUI.text = HP.ToString();
 
 		tmp /= maxHP;
-		tmp *= 0.45f;
+		tmp *= (0.45f - 0.135f);
+		tmp += 0.135f;
 
 		hpBarUI.anchorMax = new Vector2( tmp, hpBarUI.anchorMax.y );
 
@@ -133,11 +154,59 @@ public class Maya : Humanoid {
 			else
 			{
 				this.setCible(point.collider.GetComponent<Humanoid>());
-				point.collider.GetComponent<Zombie>().showUI();
+				if (point.collider.GetComponent<Zombie>() != null)
+					point.collider.GetComponent<Zombie>().showUI();
+				else if (point.collider.GetComponent<ZombieBoss>() != null)
+					point.collider.GetComponent<ZombieBoss>().showUI();
+	
 				return;
 			}
 		}
 		this.setDestination(lastChoice.point);
 
+	}
+
+	public LootMemory	equipWeapon(LootMemory loot)
+	{
+		LootMemory oldWeaponMemory = weaponMemory;
+
+		foreach (Weapon w in weapons)
+			Destroy(w.gameObject);
+
+		weapons[0] = GameObject.Instantiate(loot.weapon);
+		weapons[0].damage = loot.damage;
+		weapons[0].transform.SetParent(this.hand.transform.parent);
+		weapons[0].transform.localPosition = loot.weapon.transform.position;
+		weapons[0].transform.localScale = loot.weapon.transform.localScale;
+		weapons[0].transform.localRotation = loot.weapon.transform.rotation;
+		imgWeapon.texture = loot.getSprite();
+		weaponMemory = loot.cpy();
+
+		return (oldWeaponMemory);
+	}
+
+	public void			takePotion()
+	{
+		this.HP += (maxHP / 10);
+		if (this.HP > maxHP)
+			this.HP = maxHP;
+	}
+
+	public void			cheatUp()
+	{
+		if (manager.getCheatMode() == false)
+			return;
+
+		this.level += 1;
+		HP = maxHP;
+	}
+
+	public void			cheatDown()
+	{
+		if (manager.getCheatMode() == false || this.level == 0)
+			return;
+		
+		this.level -= 1;
+		HP = maxHP;
 	}
 }

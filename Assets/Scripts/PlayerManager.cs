@@ -9,6 +9,8 @@ public class PlayerManager : MonoBehaviour {
 	public Inventory		inventory;
 	public InventoryWin		inventoryWin;
 
+	private bool			cheatMode = false;
+
 	private static PlayerManager	inst;
 	public static PlayerManager		instance
 	{
@@ -35,6 +37,28 @@ public class PlayerManager : MonoBehaviour {
 	void Update ()
 	{
 		this.updateCompetences();
+		if (Input.GetKeyUp(KeyCode.PageUp))
+			cheatMode = !cheatMode;
+		if (cheatMode)
+			updateCheatMode();
+	}
+
+	private void	updateCheatMode()
+	{
+		if (cheatMode == false)
+			return;
+		if (Input.GetKeyDown(KeyCode.KeypadPlus))
+			this.player.cheatUp();
+		else if (Input.GetKeyDown(KeyCode.KeypadMinus))
+		{
+			this.player.cheatDown();
+			this.competences.pointCompetence -= 5;
+		}
+	}
+
+	public bool		getCheatMode()
+	{
+		return cheatMode;
 	}
 
 	private void	updateCompetences()

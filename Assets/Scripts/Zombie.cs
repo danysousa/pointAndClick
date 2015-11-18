@@ -7,12 +7,29 @@ public class Zombie : Humanoid {
 	public Text				levelText;
 	public RectTransform	lifeBar;
 	public CanvasGroup		UI;
+	public AudioClip[]		voices;
+	public AudioClip[]		grow;
+
+	private int				oldHP;
+	private float			timeLastPlay;
 	
+
+	IEnumerator		speak()
+	{
+		while (this.isAlive())
+		{
+			yield return new WaitForSeconds(Random.Range(7, 35));
+			this.GetComponent<AudioSource>().PlayOneShot(voices[Random.Range(0, voices.GetLength(0))]);
+		}
+	}
 
 	void	Awake()
 	{
+		oldHP = HP;
 		this.initHumanoid();
 		this.hideUI();
+		StartCoroutine(speak());
+		timeLastPlay = Time.timeSinceLevelLoad;
 	}
 
 	void	Update()
@@ -28,9 +45,32 @@ public class Zombie : Humanoid {
 		}
 		else if (this.navAgent.enabled == false)
 			return ;
+		if (oldHP > HP && timeLastPlay + 2 < Time.timeSinceLevelLoad)
+		{
+			this.GetComponent<AudioSource>().PlayOneShot(this.grow[Random.Range (0, grow.GetLength(0))]);
+			timeLastPlay = Time.timeSinceLevelLoad;
+		}
+		this.updateStat();
 		this.updateAnimation();
 		this.updateWeapons();
 		this.updateUI();
+		oldHP = HP;
+	}
+
+	private void		updateStat()
+	{
+		if (this.level == PlayerManager.instance.player.getLevel())
+			return ;
+		this.level = PlayerManager.instance.player.getLevel();
+		this.Armor = (this.level + 1) * 8;
+		this.STR = (this.level + 1) * 8;
+		this.AGI = (this.level + 1) * 8;
+		this.CON = (this.level + 1) * 8;
+		if (this.HP == maxHP)
+		{
+			this.HP = 5 * CON;
+			this.maxHP = HP;
+		}
 	}
 
 	private void		updateUI()
