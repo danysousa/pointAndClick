@@ -18,14 +18,14 @@ public class AirSupportSkill : Skill {
 		if (PlayerManager.instance.pointTalent > 0) {
 			if (elem.tag == "support" && support.lvl < 5 && support.isEnabled) {
 				support.lvl++;
+				PlayerManager.instance.pointTalent -= 1;
 			}
-			PlayerManager.instance.pointTalent -= 1;
 		}
 	}
 
 	public override void useSkill()
 	{
-		Instantiate (supportPrefab);
+		GameObject tmp = Instantiate (supportPrefab, PlayerManager.instance.player.transform.position, Quaternion.identity) as GameObject;
 	}
 
 }

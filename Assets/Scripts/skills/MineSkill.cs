@@ -23,12 +23,14 @@ public class MineSkill : Skill {
 		if (PlayerManager.instance.pointTalent > 0) {
 			if (elem.tag == "mine1" && mine1.lvl < 5 && mine1.isEnabled) {
 				mine1.lvl++;
+				PlayerManager.instance.pointTalent -= 1;
 			} else if (elem.tag == "mine2" && mine2.lvl < 5 && mine2.isEnabled) {
 				mine2.lvl++;
+				PlayerManager.instance.pointTalent -= 1;
 			} else if (elem.tag == "mine3" && mine3.lvl < 5 && mine2.isEnabled) {
 				mine3.lvl++;
+				PlayerManager.instance.pointTalent -= 1;
 			}
-			PlayerManager.instance.pointTalent -= 1;
 		}
 	}
 

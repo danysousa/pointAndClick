@@ -23,12 +23,14 @@ public class FireBallSkill : Skill {
 		if (PlayerManager.instance.pointTalent > 0) {
 			if (elem.tag == "fireball1" && fireball1.lvl < 5 && fireball1.isEnabled) {
 				fireball1.lvl++;
+				PlayerManager.instance.pointTalent -= 1;
 			} else if (elem.tag == "fireball2" && fireball2.lvl < 5 && fireball2.isEnabled) {
 				fireball2.lvl++;
+				PlayerManager.instance.pointTalent -= 1;
 			} else if (elem.tag == "fireball3" && fireball3.lvl < 5 && fireball3.isEnabled) {
 				fireball3.lvl++;
+				PlayerManager.instance.pointTalent -= 1;
 			}
-			PlayerManager.instance.pointTalent -= 1;
 		}
 	}
 	
