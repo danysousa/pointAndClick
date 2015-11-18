@@ -7,6 +7,7 @@ public class LifeSkill : Skill {
 	private Skill life2;
 	private Skill life3;
 	private Skill life4;
+	private Skill life5;
 
 	private bool isInUse = false;
 	public int lifeRegain = 1;
@@ -21,6 +22,7 @@ public class LifeSkill : Skill {
 		life2 = GameObject.FindGameObjectWithTag ("life2").GetComponent<Skill>();
 		life3 = GameObject.FindGameObjectWithTag ("life3").GetComponent<Skill>();
 		life4 = GameObject.FindGameObjectWithTag ("life4").GetComponent<Skill>();
+		life5 = GameObject.FindGameObjectWithTag ("life5").GetComponent<Skill>();
 	}
 	
 	public void addLevel(GameObject elem)
@@ -37,6 +39,9 @@ public class LifeSkill : Skill {
 		} else if (elem.tag == "life4" && life4.lvl < 5 && life4.isEnabled) {
 			time -= 1f;
 			life4.lvl++;
+		}else if (elem.tag == "life5" && life5.lvl < 5 && life5.isEnabled) {
+			time -= 1f;
+			life5.lvl++;
 		}
 	}
 
