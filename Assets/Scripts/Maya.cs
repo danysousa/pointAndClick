@@ -17,7 +17,7 @@ public class Maya : Humanoid {
 
 	private LootMemory		weaponMemory = null;
 	private int				oldLevel;
-	private Vector3			initialPos;
+	public Vector3			initialPos;
 
 	void Awake ()
 	{
