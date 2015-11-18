@@ -4,7 +4,7 @@ using System.Collections;
 public class FireBall : MonoBehaviour {
 
 	public GameObject	prefabExplosion;
-	public int damage = 30;
+	public int damage = 100;
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +23,8 @@ public class FireBall : MonoBehaviour {
 		{
 
 			Humanoid h = col.gameObject.GetComponent<Humanoid>();
-			h.receiveDamage( (int)( damage ) );
+			Debug.Log("##AIE##"+(int)( damage * (PlayerManager.instance.player.getLevel()+1) ));
+			h.receiveDamage( (int)( damage * (PlayerManager.instance.player.getLevel()+1) ) );
 		}
 	}
 

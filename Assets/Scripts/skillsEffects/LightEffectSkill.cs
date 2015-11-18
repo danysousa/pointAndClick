@@ -16,13 +16,12 @@ public class LightEffectSkill : MonoBehaviour {
 		Vector3 tmp = PlayerManager.instance.player.transform.position;
 		tmp.y += 5f;
 		transform.position = tmp;
-
+		currentLight.spotAngle = angleBase;
 	}
 	
 	public void setSpotAngle(float angle)
-	{
-		if (currentLight != null)
-			currentLight.spotAngle = angle;
+	{			
+		angleBase = angle;
 	}
 	
 	public void destroyLight()

@@ -66,6 +66,7 @@ public class Zombie : Humanoid {
 		this.STR = (this.level + 1) * 8;
 		this.AGI = (this.level + 1) * 8;
 		this.CON = (this.level + 1) * 8;
+		Armor = STR / 4 + CON / 2;
 		if (this.HP == maxHP)
 		{
 			this.HP = 5 * CON;

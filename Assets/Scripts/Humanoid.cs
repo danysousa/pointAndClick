@@ -91,6 +91,7 @@ public class Humanoid : MonoBehaviour {
 		this.animator.SetBool("attack", canAttack() && !this.animator.GetBool("run"));
 			
 		this.animator.SetInteger("HP", this.HP);
+		Debug.Log ("life: "+this.HP);
 	}
 
 	protected void		updateWeapons()
@@ -172,6 +173,7 @@ public class Humanoid : MonoBehaviour {
 
 	public void		receiveDamage(int damage)
 	{
+		Debug.Log ("damage"+ damage + " * "+ (1 - Armor/200));
 		this.HP -= (damage  * (1 - Armor/200) );
 	}
 

@@ -4,7 +4,7 @@ using System.Collections;
 public class Mine : MonoBehaviour {
 
 	public GameObject	prefabExplosion;
-	private float		maxDammage = 20f;
+	private float		maxDammage = 100f;
 	
 	private SphereCollider	_explosionRange;
 	private MeshRenderer	_mesh;
@@ -53,7 +53,7 @@ public class Mine : MonoBehaviour {
 			float delta = Mathf.Abs( ( distToCenterBomb / radius ) - 1 );
 			Debug.Log( delta );
 			Debug.Log( (int)( maxDammage * delta ) );
-			h.receiveDamage( (int)( maxDammage * delta ) );
+			h.receiveDamage( (int)( maxDammage * (PlayerManager.instance.player.getLevel()+1)) );
 		}
 	}
 	
