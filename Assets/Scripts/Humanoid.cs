@@ -30,6 +30,7 @@ public class Humanoid : MonoBehaviour {
 		this.HP = 5 * CON;
 		Mindamage = STR / 2;
 		Maxdamage = Mindamage + 4;
+		Armor = STR / 4 + CON / 2;
 		this.navAgent = GetComponent<NavMeshAgent>();
 		this.animator = GetComponent<Animator>();
 		initMinRangeAttack();
@@ -91,7 +92,6 @@ public class Humanoid : MonoBehaviour {
 		this.animator.SetBool("attack", canAttack() && !this.animator.GetBool("run"));
 			
 		this.animator.SetInteger("HP", this.HP);
-		Debug.Log ("life: "+this.HP);
 	}
 
 	protected void		updateWeapons()
@@ -173,7 +173,6 @@ public class Humanoid : MonoBehaviour {
 
 	public void		receiveDamage(int damage)
 	{
-		Debug.Log ("damage"+ damage + " * "+ (1 - Armor/200));
 		this.HP -= (damage  * (1 - Armor/200) );
 	}
 
